@@ -18,6 +18,15 @@
 
                 <hr>
 
+                <!-- تصنيف الملاحظة (إذا كان موجودًا) -->
+                @if ($note->category)
+                    <p><strong>التصنيف:</strong> {{ $note->category->name }}</p>
+                @else
+                    <p><strong>التصنيف:</strong> لا يوجد تصنيف</p>
+                @endif
+
+                <hr>
+
                 <!-- تواريخ الإنشاء والتعديل -->
                 <div class="d-flex justify-content-between">
                     <small class="text-muted"><strong>تم الإنشاء في:</strong> {{ $note->created_at->format('Y-m-d H:i') }}</small>

@@ -3,37 +3,37 @@
 return [
     [
         'icon' => 'bi bi-person',
-        'title' => 'Profile',
-        'route' => '#',
+        'title' => 'الحساب',
+        'route' => 'profile.edit',
     ],
     [
         'icon' => 'bi bi-question-circle',
-        'title' => 'F.A.Q',
-        'route' => '#',
+        'title' => 'الحاسبة',
+        'route' => 'calculator',
     ],
     [
         'icon' => 'bi bi-envelope',
-        'title' => 'Contact',
-        'route' => '#',
+        'title' => 'حسابات التواصل',
+        'route' => 'contact',
     ],
     [
         'icon' => 'bi bi-card-list',
-        'title' => 'Register',
-        'route' => '#',
-    ],
-    [
-        'icon' => 'bi bi-box-arrow-in-right',
-        'title' => 'Login',
-        'route' => '#',
+        'title' => 'سيرة ذاتية',
+        'route' => 'portfolio',
     ],
     [
         'icon' => 'bi bi-dash-circle',
-        'title' => 'Error 404',
-        'route' => '#',
+        'title' => 'سلة مشتريات',
+        'route' => 'shopping',
     ],
     [
         'icon' => 'bi bi-file-earmark',
-        'title' => 'Blank',
-        'route' => '#',
-    ]
+        'title' => 'تشفير/فك تشفير',
+        'route' => 'encrypt-decrypt',
+    ],
+    [
+        'icon' => 'bi bi-box-arrow-in-right',
+        'title' => 'تسجيل خروج',
+        'route' => 'logout',
+    ],
 ];

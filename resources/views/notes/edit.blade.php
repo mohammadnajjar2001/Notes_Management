@@ -40,6 +40,19 @@
                     <textarea name="content" id="content" class="form-control" rows="5" required placeholder="أدخل محتوى الملاحظة">{{ old('content', $note->content) }}</textarea>
                 </div>
 
+                <!-- حقل التصنيف -->
+                <div class="mb-4">
+                    <label for="category_id" class="form-label fw-bold">التصنيف:</label>
+                    <select name="category_id" id="category_id" class="form-control">
+                        <option value="">اختر التصنيف</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}" {{ old('category_id', $note->category_id) == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
                 <!-- أزرار الحفظ والعودة -->
                 <div class="d-flex justify-content-between">
                     <a href="{{ route('notes.index') }}" class="btn btn-outline-secondary">⬅️ العودة إلى القائمة</a>
