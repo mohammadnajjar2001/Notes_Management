@@ -3,7 +3,7 @@
     <li class="nav-item">
         <a class="nav-link"
         style="{{ $item['route'] === $active ? 'color: #ff9922; font-weight: bold;' : '' }}"
-        href="{{ route($item['route']) }}" target="_blank">
+        href="{{ route($item['route']) }}" >
         <i class="{{ $item['icon'] }} mx-4"></i>
             <span>{{ $item['title'] }}</span>
         </a>

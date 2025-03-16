@@ -39,7 +39,7 @@ class NoteSeeder extends Seeder
                 'title' => $note['title'],
                 'content' => $note['content'],
                 'is_favorite' => fake()->boolean(20), // 20% مفضلة
-                'category_id' => fake()->boolean(10) ? 1 : (fake()->boolean(20) ? 2 : null),
+                //'category_id' => fake()->boolean(10) ? 1 : (fake()->boolean(20) ? 2 : null),
             ]);
         }
     }

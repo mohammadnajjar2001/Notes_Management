@@ -1,10 +1,12 @@
-<link rel="stylesheet" href="assets\css\style2.css">
+@extends('layout.app')
+
+@section('title')
+    Calculator
+@endsection
+
+@section('content')
+{{-- <link rel="stylesheet" href="assets\css\style2.css"> --}}
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
@@ -28,3 +30,5 @@
         </div>
     </div>
 </x-app-layout>
+
+@endsection

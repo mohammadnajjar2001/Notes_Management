@@ -15,23 +15,23 @@ Route::middleware('auth')->group(function () {
     })->name('none');
 
     Route::get('calculator', function () {
-        return redirect('https://mohammadnajjar2001.github.io/calculator-dec-and-bin/');
+        return view('pages.calculator');
     })->name('calculator');
 
     Route::get('/portfolio', function () {
-        return redirect('https://test-ea0de.web.app/');
+        return view('pages.portfolio');
     })->name('portfolio');
 
     Route::get('/contact', function () {
-        return redirect('https://mohammed-nassan-najjar.web.app/');
+        return view('pages.contact');
     })->name('contact');
 
     Route::get('/shopping', function () {
-        return redirect('https://shoping-168b7.web.app/');
+        return view('pages.shopping');
     })->name('shopping');
 
     Route::get('/encrypt-decrypt', function () {
-        return redirect('https://mohammadnajjar2001.github.io/Encrypt-decrypt/');
+        return view('pages.encrypt-decrypt');
     })->name('encrypt-decrypt');
 
 });
