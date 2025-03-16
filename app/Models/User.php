@@ -48,4 +48,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Note::class);
     }
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
+    }
 }

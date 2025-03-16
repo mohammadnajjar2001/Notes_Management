@@ -19,7 +19,9 @@ class NoteController extends Controller
         $is_favorite = $request->get('is_favorite', null);
         $category_id = $request->get('category_id', null); // استقبال category_id من الطلب
 
-        $notes = Note::where('title', 'like', "%$title%")
+        // جلب فقط الملاحظات الخاصة بالمستخدم المسجل دخوله
+        $notes = Note::where('user_id', Auth::id())
+            ->where('title', 'like', "%$title%")
             ->where('content', 'like', "%$content%");
 
         // تطبيق الفلترة حسب الحالة (مفضلة أو غير مفضلة)
@@ -38,6 +40,7 @@ class NoteController extends Controller
     }
 
 
+
     public function toggleFavorite(Note $note)
     {
         // تأكد من أن المستخدم لديه الحق في تغيير حالة المفضلة
@@ -47,16 +50,19 @@ class NoteController extends Controller
 
     public function create()
     {
-        $categories = Category::all();
+        $user = Auth::user();
+        $categories = Category::where('user_id', $user->id)->get();
         return view('notes.create', compact('categories'));
     }
 
     public function store(Request $request)
     {
+        $user = Auth::user();
         // إذا اختار المستخدم إضافة صنف جديد
         if ($request->has('new_category') && $request->new_category) {
             $category = Category::create([
                 'name' => $request->new_category,
+                'user_id'=> $user->id,
             ]);
             $category_id = $category->id; // الحصول على ID الصنف الجديد
         } else {
