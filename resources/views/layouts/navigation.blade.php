@@ -1,100 +1,228 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
-    <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
-                    </a>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Navbar Example</title>
+    <!-- استدعاء Alpine.js -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        /* أسس عامة */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f9fafb;
+}
+
+/* شريط التنقل */
+.navbar {
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 64px;
+}
+
+/* الشعار */
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #111827;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.logo:hover {
+    color: #2563eb;
+}
+
+/* روابط التنقل (سطح المكتب) */
+.nav-links {
+    display: flex;
+    gap: 40px; /* زيادة المسافة بين العناصر */
+}
+
+.nav-item {
+    text-decoration: none;
+    color: #374151;
+    font-weight: 500;
+    transition: color 0.3s;
+    padding: 8px 12px; /* إضافة padding لتعزيز المسافات */
+}
+
+.nav-item:hover {
+    color: #2563eb;
+}
+
+/* قائمة المستخدم */
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.username {
+    font-weight: 600;
+    color: #111827;
+}
+
+.logout-btn {
+    background-color: #dc2626;
+    color: #ffffff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+    background-color: #b91c1c;
+}
+
+/* زر القائمة للهواتف */
+.menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+    stroke: #111827;
+    fill: none;
+}
+
+/* القائمة الجانبية للهواتف */
+.mobile-menu {
+    display: none;
+    background: #ffffff;
+    border-top: 1px solid #e5e7eb;
+    padding: 8px 0;
+}
+
+.mobile-item {
+    display: block;
+    padding: 10px 16px;
+    text-decoration: none;
+    color: #374151;
+    transition: background-color 0.3s;
+}
+
+.mobile-item:hover {
+    background: #f3f4f6;
+}
+
+.divider {
+    border-top: 1px solid #e5e7eb;
+    margin: 8px 0;
+}
+
+.mobile-logout {
+    background-color: #dc2626;
+    color: #ffffff;
+    border: none;
+    width: 100%;
+    text-align: left;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.mobile-logout:hover {
+    background-color: #b91c1c;
+}
+
+/* استجابة للهواتف */
+@media (max-width: 640px) {
+
+    .nav-links,
+    .user-menu {
+        display: none;
+    }
+
+    .menu-btn {
+        display: block;
+    }
+
+    .mobile-menu {
+        display: none;
+    }
+
+    .mobile-menu.open {
+        display: block;
+    }
+}
+
+    </style>
+</head>
+
+<body>
+    <!-- شريط التنقل -->
+    <nav x-data="{ open: false }" class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <!-- الشعار -->
+                <a href="{{ route('dashboard') }}" class="logo">
+                    {{ config('app.name', 'Laravel') }}
+                </a>
+
+                <!-- روابط التنقل (سطح المكتب) -->
+                <div class="nav-links hidden sm:flex">
+                    <a href="{{ route('dashboard') }}" class="nav-item">Dashboard</a>
+                    <a href="{{ route('profile.edit') }}" class="nav-item">Profile</a>
                 </div>
 
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
+                <!-- قائمة المستخدم -->
+                <div class="user-menu hidden sm:flex">
+                    <span class="username">{{ Auth::user()->name }}</span>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="logout-btn">Log Out</button>
+                    </form>
                 </div>
-            </div>
 
-            <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <x-dropdown align="right" width="48">
-                    <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
-
-                            <div class="ms-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                        </button>
-                    </x-slot>
-
-                    <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
-
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </form>
-                    </x-slot>
-                </x-dropdown>
-            </div>
-
-            <!-- Hamburger -->
-            <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                <!-- زر القائمة للهواتف -->
+                <button @click="open = !open" class="menu-btn sm:hidden">
+                    <svg x-show="!open" class="icon" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <svg x-show="open" class="icon" viewBox="0 0 24 24" style="display: none;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
         </div>
-    </div>
 
-    <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
+        <!-- القائمة الجانبية للهواتف -->
+        <div :class="{ 'open': open }" class="mobile-menu sm:hidden">
+            <a href="{{ route('dashboard') }}" class="mobile-item">Dashboard</a>
+            <a href="{{ route('profile.edit') }}" class="mobile-item">Profile</a>
+            <div class="divider"></div>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="mobile-logout">Log Out</button>
+            </form>
         </div>
+    </nav>
+</body>
 
-        <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
-            </div>
-
-            <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
-
-                <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </x-responsive-nav-link>
-                </form>
-            </div>
-        </div>
-    </div>
-</nav>
+</html>

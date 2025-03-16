@@ -34,10 +34,12 @@ class NoteController extends Controller
             $notes->where('category_id', $category_id);
         }
 
-        $notes = $notes->get();
+        // ترتيب الملاحظات حسب الأحدث تعديلًا
+        $notes = $notes->orderBy('updated_at', 'desc')->get();
 
         return view('notes.index', compact('notes', 'title', 'content', 'is_favorite', 'categories', 'category_id'));
     }
+
 
 
 
